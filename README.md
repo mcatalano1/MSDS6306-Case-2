@@ -12,4 +12,4 @@ DDS_CaseStudy_CleanTrain.csv = a cleaned and simplified dataset using only our f
 
 MCatalanoAttritionPredictions.csv = test set predictions using a KNN classification model
 
-MCatalano_CaseStudy2.Rmd = my R work
+MCatalano_CaseStudy2.Rmd = R work showing the details of the correlation analysis and KNN model
