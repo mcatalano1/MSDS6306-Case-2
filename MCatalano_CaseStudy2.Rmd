@@ -6,6 +6,9 @@ output: html_document
 ---
 #Talent Management and Attrition Study - DDS Analytics
 
+###Executive Summary:
+The goal of this project is to highlight some attributes related to attrition, given a dataset of 1,170 observations and 37 potential explanatory variables. Finding the right variables and how they relate to attrition is our main objective. Additionally, I am showcasing a classification model which predicts attrition based on our aformentioned variables.
+
 Link to GitHub repository: https://github.com/mcatalano1/MSDS6306-Case-2
 
 Link to YouTube video: https://youtu.be/-aSsTpUKu5I

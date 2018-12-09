@@ -130,6 +130,9 @@ $(document).ready(function () {
 
 <div id="talent-management-and-attrition-study---dds-analytics" class="section level1">
 <h1>Talent Management and Attrition Study - DDS Analytics</h1>
+<div id="executive-summary" class="section level3">
+<h3>Executive Summary:</h3>
+<p>The goal of this project is to highlight some attributes related to attrition, given a dataset of 1,170 observations and 37 potential explanatory variables. Finding the right variables and how they relate to attrition is our main objective. Additionally, I am showcasing a classification model which predicts attrition based on our aformentioned variables.</p>
 <p>Link to GitHub repository: <a href="https://github.com/mcatalano1/MSDS6306-Case-2" class="uri">https://github.com/mcatalano1/MSDS6306-Case-2</a></p>
 <p>Link to YouTube video: <a href="https://youtu.be/-aSsTpUKu5I" class="uri">https://youtu.be/-aSsTpUKu5I</a></p>
 <pre class="r"><code>#Packages used in this model
@@ -145,6 +148,7 @@ library(ggplot2)
 #Overtime: 1 for No, 2 for Yes
 #MonthlyIncome_log: Log transformations of the monthly income used to standardize data
 #TotalWorkingYears: Self-explanatory</code></pre>
+</div>
 <div id="a.-clean-and-prepare-the-data" class="section level3">
 <h3>A. Clean and prepare the data:</h3>
 <pre class="r"><code>#Cleaned versions of the project's main dataset
@@ -266,286 +270,286 @@ perc_test</code></pre>
 <pre class="r"><code>results = class::knn(train[,c(3:6)],test[,c(3:6)],train$Attrition,k=5)
 summary(results) #print out a summary of the predictions</code></pre>
 <pre><code>##  No Yes 
-## 226   7</code></pre>
+## 224   9</code></pre>
 <pre class="r"><code>test$AttritionPred = results
 dfVal &lt;- data.frame(test) #Simply renames the existing test set with prediction column to &quot;dVal&quot; per instructions
 head(dfVal,6) #Shows top 6 rows  </code></pre>
 <pre><code>##    ID Attrition JobInvolvement OT MonthlyIncome_Log TotalWorkingYears
 ## 2   2        No              2  1             9.484                29
-## 5   5        No              3  2             9.491                17
-## 19 19        No              3  1             7.925                 7
+## 20 20        No              4  2             7.702                10
 ## 21 21        No              3  2             9.896                31
-## 25 25       Yes              3  2             7.742                 3
-## 30 30        No              3  1             9.889                36
+## 24 24        No              3  1             8.764                 6
+## 35 35        No              3  1             8.158                10
+## 44 44        No              3  1             9.767                10
 ##    Attrition_Num AttritionPred
 ## 2              1            No
-## 5              1            No
-## 19             1            No
+## 20             1            No
 ## 21             1            No
-## 25             2            No
-## 30             1            No</code></pre>
+## 24             1            No
+## 35             1            No
+## 44             1            No</code></pre>
 <pre class="r"><code>dfPreds &lt;- data.frame(dfVal$ID,dfVal$AttritionPred) #Created data frame with ID and predicted attrition label for our test set.
 colnames(dfPreds) &lt;- c(&quot;ID&quot;, &quot;Attrition Prediction&quot;) #Renames column headers
 dfPreds #Shows all predicted values in the test set</code></pre>
 <pre><code>##       ID Attrition Prediction
 ## 1      2                   No
-## 2      5                   No
-## 3     19                   No
-## 4     21                   No
-## 5     25                   No
-## 6     30                   No
-## 7     60                   No
-## 8     76                   No
-## 9     81                   No
-## 10    89                  Yes
-## 11    90                   No
-## 12    96                   No
-## 13    99                  Yes
-## 14   101                   No
-## 15   102                   No
-## 16   104                   No
-## 17   105                   No
-## 18   118                   No
-## 19   123                   No
-## 20   127                   No
-## 21   128                   No
-## 22   130                   No
-## 23   136                   No
-## 24   138                   No
-## 25   141                   No
-## 26   143                   No
-## 27   150                   No
-## 28   151                   No
-## 29   152                   No
-## 30   153                   No
-## 31   157                   No
-## 32   159                   No
-## 33   160                   No
-## 34   172                   No
-## 35   178                   No
-## 36   179                   No
-## 37   180                   No
-## 38   184                   No
-## 39   185                   No
-## 40   193                   No
-## 41   194                   No
-## 42   199                   No
-## 43   207                   No
-## 44   208                   No
-## 45   214                   No
-## 46   215                   No
-## 47   219                   No
-## 48   222                   No
-## 49   224                   No
-## 50   228                   No
-## 51   232                   No
-## 52   245                   No
-## 53   249                   No
-## 54   250                   No
-## 55   252                   No
-## 56   258                   No
-## 57   259                   No
-## 58   262                   No
-## 59   264                   No
-## 60   265                   No
-## 61   272                   No
-## 62   274                   No
-## 63   279                   No
-## 64   281                   No
-## 65   284                   No
-## 66   290                   No
-## 67   291                   No
-## 68   293                   No
-## 69   301                   No
-## 70   305                   No
-## 71   306                   No
-## 72   309                   No
-## 73   310                   No
-## 74   314                   No
-## 75   316                   No
-## 76   323                   No
-## 77   324                   No
-## 78   335                   No
-## 79   340                   No
-## 80   343                   No
-## 81   346                   No
-## 82   347                   No
-## 83   354                   No
-## 84   357                  Yes
-## 85   359                   No
-## 86   360                   No
-## 87   365                   No
-## 88   370                  Yes
-## 89   371                   No
-## 90   383                   No
-## 91   384                   No
-## 92   385                   No
-## 93   387                   No
-## 94   389                   No
-## 95   396                   No
-## 96   402                   No
-## 97   405                  Yes
-## 98   408                   No
-## 99   412                   No
-## 100  427                   No
-## 101  428                   No
-## 102  432                   No
-## 103  442                   No
-## 104  451                   No
-## 105  455                   No
-## 106  456                   No
-## 107  464                   No
-## 108  467                   No
-## 109  470                   No
-## 110  471                   No
-## 111  475                   No
-## 112  491                   No
-## 113  495                   No
-## 114  496                   No
-## 115  507                   No
-## 116  509                   No
-## 117  511                   No
-## 118  518                   No
-## 119  523                   No
-## 120  527                   No
-## 121  534                   No
-## 122  537                   No
-## 123  539                   No
-## 124  545                   No
-## 125  550                   No
-## 126  554                   No
-## 127  566                   No
-## 128  575                   No
-## 129  576                   No
-## 130  577                   No
-## 131  584                   No
-## 132  585                   No
-## 133  587                   No
-## 134  596                   No
-## 135  598                   No
-## 136  601                   No
-## 137  602                   No
-## 138  618                   No
-## 139  627                   No
-## 140  639                   No
-## 141  643                   No
-## 142  655                   No
-## 143  661                   No
-## 144  669                   No
-## 145  671                   No
-## 146  680                   No
-## 147  681                  Yes
-## 148  682                   No
-## 149  689                   No
-## 150  692                   No
-## 151  702                   No
-## 152  711                   No
-## 153  712                   No
-## 154  718                   No
-## 155  723                   No
-## 156  734                   No
-## 157  735                   No
-## 158  741                   No
-## 159  743                   No
-## 160  769                   No
-## 161  775                   No
-## 162  785                   No
-## 163  791                   No
-## 164  793                   No
-## 165  795                   No
-## 166  799                   No
-## 167  800                   No
-## 168  802                   No
-## 169  803                   No
-## 170  822                   No
-## 171  829                   No
-## 172  837                   No
-## 173  845                   No
-## 174  846                   No
-## 175  852                   No
-## 176  854                   No
-## 177  856                   No
-## 178  874                   No
-## 179  879                   No
-## 180  882                   No
-## 181  884                   No
-## 182  905                   No
-## 183  906                   No
-## 184  911                   No
-## 185  913                   No
-## 186  931                   No
-## 187  932                   No
-## 188  934                   No
-## 189  937                   No
-## 190  949                   No
-## 191  952                   No
-## 192  953                   No
-## 193  954                   No
-## 194  957                   No
-## 195  958                   No
-## 196  960                   No
-## 197  976                   No
-## 198  987                   No
-## 199  992                   No
-## 200  999                   No
-## 201 1001                   No
-## 202 1004                   No
-## 203 1012                   No
-## 204 1015                   No
-## 205 1020                   No
-## 206 1023                   No
-## 207 1026                   No
-## 208 1027                   No
-## 209 1029                   No
-## 210 1030                   No
-## 211 1033                   No
-## 212 1034                   No
-## 213 1047                  Yes
-## 214 1051                   No
-## 215 1055                   No
-## 216 1063                   No
-## 217 1065                   No
-## 218 1068                   No
-## 219 1069                   No
-## 220 1071                   No
-## 221 1074                   No
-## 222 1080                   No
-## 223 1087                   No
-## 224 1102                   No
-## 225 1133                   No
-## 226 1134                   No
-## 227 1136                   No
-## 228 1139                   No
-## 229 1141                   No
-## 230 1144                   No
+## 2     20                   No
+## 3     21                   No
+## 4     24                   No
+## 5     35                   No
+## 6     44                   No
+## 7     47                   No
+## 8     50                   No
+## 9     53                   No
+## 10    61                   No
+## 11    62                  Yes
+## 12    64                   No
+## 13    75                   No
+## 14    95                   No
+## 15    99                  Yes
+## 16   103                   No
+## 17   108                   No
+## 18   111                  Yes
+## 19   119                   No
+## 20   126                   No
+## 21   131                   No
+## 22   133                   No
+## 23   134                   No
+## 24   136                   No
+## 25   142                   No
+## 26   146                   No
+## 27   148                   No
+## 28   165                   No
+## 29   169                   No
+## 30   185                   No
+## 31   194                   No
+## 32   209                   No
+## 33   210                   No
+## 34   213                   No
+## 35   223                   No
+## 36   231                   No
+## 37   233                   No
+## 38   239                   No
+## 39   244                   No
+## 40   247                   No
+## 41   253                   No
+## 42   254                   No
+## 43   255                   No
+## 44   261                  Yes
+## 45   262                   No
+## 46   269                   No
+## 47   277                   No
+## 48   298                   No
+## 49   304                   No
+## 50   307                   No
+## 51   309                   No
+## 52   316                   No
+## 53   317                   No
+## 54   323                   No
+## 55   326                   No
+## 56   350                   No
+## 57   357                   No
+## 58   377                   No
+## 59   384                   No
+## 60   385                   No
+## 61   386                   No
+## 62   401                   No
+## 63   402                   No
+## 64   409                   No
+## 65   410                   No
+## 66   415                   No
+## 67   419                  Yes
+## 68   421                   No
+## 69   425                   No
+## 70   431                   No
+## 71   436                   No
+## 72   438                   No
+## 73   444                   No
+## 74   450                   No
+## 75   452                   No
+## 76   454                   No
+## 77   457                   No
+## 78   458                   No
+## 79   462                   No
+## 80   465                   No
+## 81   469                   No
+## 82   475                   No
+## 83   476                   No
+## 84   484                   No
+## 85   487                   No
+## 86   491                   No
+## 87   492                  Yes
+## 88   500                   No
+## 89   513                   No
+## 90   518                   No
+## 91   527                   No
+## 92   529                   No
+## 93   531                   No
+## 94   532                   No
+## 95   539                   No
+## 96   540                   No
+## 97   548                   No
+## 98   551                   No
+## 99   565                   No
+## 100  567                   No
+## 101  575                   No
+## 102  584                   No
+## 103  591                   No
+## 104  595                   No
+## 105  598                   No
+## 106  600                   No
+## 107  601                   No
+## 108  606                   No
+## 109  610                  Yes
+## 110  612                   No
+## 111  613                   No
+## 112  617                   No
+## 113  620                   No
+## 114  627                   No
+## 115  639                   No
+## 116  644                   No
+## 117  662                   No
+## 118  669                   No
+## 119  671                   No
+## 120  675                   No
+## 121  698                   No
+## 122  706                   No
+## 123  709                   No
+## 124  724                   No
+## 125  726                   No
+## 126  727                   No
+## 127  732                   No
+## 128  733                   No
+## 129  739                   No
+## 130  747                   No
+## 131  748                   No
+## 132  750                   No
+## 133  754                   No
+## 134  758                   No
+## 135  760                   No
+## 136  762                   No
+## 137  766                   No
+## 138  777                   No
+## 139  780                   No
+## 140  785                   No
+## 141  791                   No
+## 142  798                   No
+## 143  809                   No
+## 144  816                   No
+## 145  825                   No
+## 146  829                   No
+## 147  833                   No
+## 148  834                   No
+## 149  846                   No
+## 150  854                   No
+## 151  857                   No
+## 152  868                   No
+## 153  870                   No
+## 154  873                   No
+## 155  876                   No
+## 156  877                   No
+## 157  878                   No
+## 158  885                   No
+## 159  886                   No
+## 160  889                   No
+## 161  893                   No
+## 162  898                   No
+## 163  901                   No
+## 164  904                   No
+## 165  912                   No
+## 166  913                   No
+## 167  916                   No
+## 168  921                   No
+## 169  923                   No
+## 170  931                   No
+## 171  932                   No
+## 172  935                   No
+## 173  938                   No
+## 174  941                   No
+## 175  944                   No
+## 176  948                   No
+## 177  954                   No
+## 178  960                   No
+## 179  963                   No
+## 180  964                   No
+## 181  966                   No
+## 182  972                   No
+## 183  977                   No
+## 184  987                   No
+## 185  997                   No
+## 186  999                   No
+## 187 1008                   No
+## 188 1012                   No
+## 189 1013                   No
+## 190 1014                   No
+## 191 1018                  Yes
+## 192 1021                   No
+## 193 1023                   No
+## 194 1027                   No
+## 195 1031                   No
+## 196 1034                   No
+## 197 1039                   No
+## 198 1055                   No
+## 199 1058                   No
+## 200 1059                   No
+## 201 1060                   No
+## 202 1061                   No
+## 203 1067                   No
+## 204 1068                   No
+## 205 1073                   No
+## 206 1074                   No
+## 207 1081                   No
+## 208 1083                   No
+## 209 1084                   No
+## 210 1090                   No
+## 211 1095                   No
+## 212 1097                   No
+## 213 1099                   No
+## 214 1106                   No
+## 215 1107                   No
+## 216 1109                   No
+## 217 1115                   No
+## 218 1118                   No
+## 219 1119                   No
+## 220 1120                   No
+## 221 1124                   No
+## 222 1127                   No
+## 223 1129                  Yes
+## 224 1130                   No
+## 225 1132                   No
+## 226 1138                   No
+## 227 1139                   No
+## 228 1142                   No
+## 229 1148                   No
+## 230 1151                   No
 ## 231 1153                   No
-## 232 1158                   No
-## 233 1162                   No</code></pre>
+## 232 1155                   No
+## 233 1165                   No</code></pre>
 <pre class="r"><code>#Now we assess the predictions with the known outcomes using a confusion matrix
 confusionMatrix(table(test$Attrition,test$AttritionPred),positive = &quot;Yes&quot;) </code></pre>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##      
 ##        No Yes
-##   No  195   1
+##   No  193   3
 ##   Yes  31   6
 ##                                         
-##                Accuracy : 0.863         
-##                  95% CI : (0.812, 0.904)
-##     No Information Rate : 0.97          
+##                Accuracy : 0.854         
+##                  95% CI : (0.802, 0.897)
+##     No Information Rate : 0.961         
 ##     P-Value [Acc &gt; NIR] : 1             
 ##                                         
-##                   Kappa : 0.234         
-##  Mcnemar's Test P-Value : 0.000000295   
+##                   Kappa : 0.212         
+##  Mcnemar's Test P-Value : 0.00000365    
 ##                                         
-##             Sensitivity : 0.8571        
-##             Specificity : 0.8628        
+##             Sensitivity : 0.6667        
+##             Specificity : 0.8616        
 ##          Pos Pred Value : 0.1622        
-##          Neg Pred Value : 0.9949        
-##              Prevalence : 0.0300        
+##          Neg Pred Value : 0.9847        
+##              Prevalence : 0.0386        
 ##          Detection Rate : 0.0258        
 ##    Detection Prevalence : 0.1588        
-##       Balanced Accuracy : 0.8600        
+##       Balanced Accuracy : 0.7641        
 ##                                         
 ##        'Positive' Class : Yes           
 ## </code></pre>
