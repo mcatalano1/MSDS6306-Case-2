@@ -1,6 +1,6 @@
 # MSDS6306-Case-2
 
-Please see "DDS_Case2.ppt" for the presentation, and see "MCatalano_CaseStudy2.html" for the RMarkdown results that support the analysis
+Please see "MCatalano_Case2_Presentation.ppt" for the final presentation component, and see "MCatalano_CaseStudy2.html" for the RMarkdown results that support the analysis
 
 For reference:
 
