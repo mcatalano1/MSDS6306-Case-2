@@ -8,6 +8,8 @@ output: html_document
 
 Link to GitHub repository: https://github.com/mcatalano1/MSDS6306-Case-2
 
+Link to YouTube video: https://youtu.be/-aSsTpUKu5I
+
 ```{r, echo=TRUE, message=FALSE}
 #Packages used in this model
 library(mlr)
@@ -91,6 +93,6 @@ dfPreds #Shows all predicted values in the test set
 
 #Now we assess the predictions with the known outcomes using a confusion matrix
 confusionMatrix(table(test$Attrition,test$AttritionPred),positive = "Yes") 
-write.table(dfPreds, file="MCatalanoAttritionPredictions.csv", row.names=FALSE, col.names=FALSE, sep=" ") #write out to CSV in working directory
+write.table(dfPreds, file="MCatalanoAttritionPredictions.csv", row.names=FALSE, col.names=TRUE) #write out to CSV in working directory
 #83-85% accuracy using a k of 5 
 ```
