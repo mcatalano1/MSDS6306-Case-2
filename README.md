@@ -1,6 +1,8 @@
 # MSDS6306-Case-2
 
-Please see "MCatalano_Case2_Presentation.ppt" for the final presentation component, and see "MCatalano_CaseStudy2.html" for the RMarkdown results that support the analysis
+Please see "MCatalano_Case2_Presentation.ppt" for the final presentation component, and see "MCatalano_CaseStudy2.html" for the RMarkdown results that support the analysis.
+
+YouTube link: https://youtu.be/-aSsTpUKu5I
 
 For reference:
 
@@ -10,6 +12,6 @@ CaseStudy2-OriginalValidation.csv = was used for testing purposes, however the K
 
 DDS_CaseStudy_CleanTrain.csv = a cleaned and simplified dataset using only our four chosen variables in relation to attrition
 
-MCatalanoAttritionPredictions.csv = test set predictions using a KNN classification model
+Case2PredictionsCatalano.csv = test set predictions using my KNN classification model
 
 MCatalano_CaseStudy2.Rmd = R work showing the details of the correlation analysis and KNN model
