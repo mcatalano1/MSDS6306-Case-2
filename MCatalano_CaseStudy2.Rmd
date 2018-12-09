@@ -1,0 +1,96 @@
+---
+title: "MSDS 6306 Case Study 2"
+author: "Michael Catalano"
+date: "December 9, 2018"
+output: html_document
+---
+#Talent Management and Attrition Study - DDS Analytics
+
+Link to GitHub repository: https://github.com/mcatalano1/MSDS6306-Case-2
+
+```{r, echo=TRUE, message=FALSE}
+#Packages used in this model
+library(mlr)
+library(caret)
+library(ggplot2)
+
+#DDS_CaseStudy_CleanTrain and DDS_CaseStudyCleanValidate CSV files were used for KNN model
+
+#Variables used:
+
+#JobInvolvement: Scale of 1-4
+#Overtime: 1 for No, 2 for Yes
+#MonthlyIncome_log: Log transformations of the monthly income used to standardize data
+#TotalWorkingYears: Self-explanatory
+```
+
+###A. Clean and prepare the data:
+```{r, echo=TRUE}
+#Cleaned versions of the project's main dataset
+CaseData <- read.csv("https://raw.githubusercontent.com/mcatalano1/MSDS6306-Case-2/master/DDS_CaseStudy_CleanTrain.csv",header = T, stringsAsFactors=FALSE) #Cleaned Training set
+
+#Print first 6 rows of the dataset
+head(CaseData,6)
+
+CaseData$Attrition = as.factor(CaseData$Attrition) #Change Attrition to a factor for classification purposes (our response)
+
+#Summarize datase
+summarizeColumns(CaseData)
+
+#Check out dimensions of dataset for confirmation
+dim(CaseData)
+```
+###B. Check for correlations:
+```{r, echo=TRUE}
+pairs(~ Attrition + JobInvolvement + OT + MonthlyIncome_Log + TotalWorkingYears, data = CaseData)
+#Matrix not exactly meaningful to visualize linearity since there is categorical/ordinal data
+
+CaseData$Attrition_Num <- ifelse(CaseData$Attrition == "No", 1, 2) #Add numerical attrition column
+options("scipen"=100, "digits"=4) #Removing scientific notation for cleaner p-values
+
+#The following variables showed the most promising correlations with Attrition (highest coefficient R)
+cor.test(CaseData$JobInvolvement, CaseData$Attrition_Num) #Pearson's R of -.149
+cor.test(CaseData$OT, CaseData$Attrition_Num) #Pearson's R of .237
+cor.test(CaseData$MonthlyIncome_Log, CaseData$Attrition_Num) #Pearson's R of -.1668
+cor.test(CaseData$TotalWorkingYears, CaseData$Attrition_Num) #Pearson's R of -.154
+```
+
+
+
+###C. Fit a KNN Classification Model using variables found above:
+```{r, echo=TRUE}
+dfTrain <- createDataPartition(y=CaseData$Attrition, p = 0.80, list = F) #Partition out 80% of the data for a training set (1170 training rows)
+
+#rename df
+test <- CaseData[-dfTrain,]
+train <- CaseData[dfTrain,] 
+
+#test for lengths
+ltrain = length(train$Attrition)
+ltest = length(test$Attrition)
+
+#Confirm the 80/20 train to test split
+perc_test = ltest / (ltest + ltrain)
+perc_train = ltrain / (ltest + ltrain)
+perc_test
+perc_train
+
+#Now we have a training and test set ready for modeling
+```
+
+###D. Run and assess the KNN Model:
+```{r, echo=TRUE}
+results = class::knn(train[,c(3:6)],test[,c(3:6)],train$Attrition,k=5)
+summary(results) #print out a summary of the predictions
+test$AttritionPred = results
+dfVal <- data.frame(test) #Simply renames the existing test set with prediction column to "dVal" per instructions
+head(dfVal,6) #Shows top 6 rows  
+dfPreds <- data.frame(dfVal$ID,dfVal$AttritionPred) #Created data frame with ID and predicted attrition label for our test set.
+colnames(dfPreds) <- c("ID", "Attrition Prediction") #Renames column headers
+dfPreds #Shows all predicted values in the test set
+
+#Now we assess the predictions with the known outcomes using a confusion matrix
+confusionMatrix(table(test$Attrition,test$AttritionPred),positive = "Yes") 
+write.table(dfPreds, file="MCatalanoAttritionPredictions.csv", row.names=FALSE, col.names=FALSE, sep=" ") #write out to CSV in working directory
+#83-85% accuracy using a k of 5 
+```
